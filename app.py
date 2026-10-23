@@ -1,6 +1,10 @@
 import json
+import os
+
 import streamlit as st
 from openai import OpenAI
+
+from detector import apply_floor, rule_report
 
 # ------------------------------------------------------------------
 # 피싱아이 (Phishing-Eye)
@@ -13,9 +17,17 @@ st.set_page_config(page_title="피싱아이 | 보이스피싱·스미싱 판별�
 # ---- 시크릿(배포 시 Streamlit Secrets에 입력) --------------------
 # OpenAI 사용 시:   API_KEY=sk-...,  BASE_URL 비움,  MODEL=gpt-4o-mini
 # Upstage 사용 시:  API_KEY=up_...,  BASE_URL=https://api.upstage.ai/v1,  MODEL=solar-pro2
-API_KEY = st.secrets.get("API_KEY", "")
-BASE_URL = st.secrets.get("BASE_URL", "").strip()
-MODEL = st.secrets.get("MODEL", "gpt-4o-mini")
+# 키가 없으면 규칙 기반 데모 모드로 동작한다(누구나 바로 써 볼 수 있게).
+def _secret(name, default=""):
+    try:
+        return st.secrets.get(name, os.environ.get(name, default))
+    except Exception:  # secrets.toml 이 없을 때
+        return os.environ.get(name, default)
+
+
+API_KEY = _secret("API_KEY")
+BASE_URL = _secret("BASE_URL").strip()
+MODEL = _secret("MODEL", "gpt-4o-mini")
 
 def get_client():
     if BASE_URL:
@@ -46,6 +58,8 @@ st.markdown(
     unsafe_allow_html=True,
 )
 st.caption("어르신도 안심하고 쓸 수 있는 금융사기 예방 서비스")
+if not API_KEY:
+    st.info("데모 모드: API 키 없이 **규칙 기반 탐지기**로 판정합니다. 키를 넣으면 AI 판정에 규칙이 안전장치로 더해집니다.")
 
 examples = {
     "예시① 택배 사칭 문자": "[국제발신] 고객님 택배가 주소불명으로 반송되었습니다. 아래 링크에서 주소를 확인해주세요 http://bit.ly/parcel-check",
@@ -82,17 +96,19 @@ def analyze_text(t: str):
     return json.loads(raw)
 
 if analyze:
-    if not API_KEY:
-        st.error("API 키가 설정되지 않았습니다. (Streamlit Secrets에 API_KEY를 입력하세요)")
-    elif not text.strip():
+    if not text.strip():
         st.warning("먼저 내용을 붙여넣어 주세요.")
     else:
-        with st.spinner("분석 중입니다..."):
-            try:
-                data = analyze_text(text)
-            except Exception as e:
-                st.error(f"분석 중 오류가 발생했습니다: {e}")
-                st.stop()
+        data = None
+        if API_KEY:
+            with st.spinner("AI가 분석 중입니다..."):
+                try:
+                    # AI 판정 + 규칙 안전 바닥: AI 가 신호를 놓쳐도 규칙이 찾은 등급 아래로는 내려가지 않는다
+                    data = apply_floor(analyze_text(text), text)
+                except Exception:
+                    st.warning("AI 분석에 실패해 규칙 기반 탐지기로 판정했습니다.")
+        if data is None:
+            data = rule_report(text)
 
         level = data.get("risk_level", "주의")
         score = int(data.get("score", 50))
@@ -110,6 +126,9 @@ if analyze:
 
         st.markdown("### 🧓 쉬운 설명")
         st.info(data.get("senior_explain", ""))
+
+        source = "AI + 규칙 안전장치" if data.get("source") == "llm" else "규칙 기반 탐지기"
+        st.caption(f"판정 방식: {source}" + (" · AI가 놓친 신호를 규칙이 보완했어요" if data.get("floor_applied") else ""))
 
         st.markdown("### 🔎 이렇게 판단했어요")
         for r in data.get("reasons", []):
