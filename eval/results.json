@@ -1,0 +1,559 @@
+{
+  "n_scam": 25,
+  "n_normal": 25,
+  "confusion": {
+    "tp": 19,
+    "fn": 6,
+    "fp": 7,
+    "tn": 18
+  },
+  "recall": 0.76,
+  "precision": 0.731,
+  "f1": 0.745,
+  "false_positive_rate": 0.28,
+  "accuracy": 0.74,
+  "scam_danger_rate": 0.24,
+  "level_matrix": {
+    "normal→안전": 18,
+    "normal→주의": 7,
+    "scam→안전": 6,
+    "scam→위험": 6,
+    "scam→주의": 13
+  },
+  "recall_by_type": {
+    "결제 승인 사칭": "0/2",
+    "관세 사칭": "1/1",
+    "기관 사칭": "3/3",
+    "대출 사칭": "2/2",
+    "띄어쓰기·기호 회피": "0/2",
+    "보이스피싱 통화": "2/2",
+    "원격 앱 유도": "1/1",
+    "정부지원금 사칭": "1/1",
+    "중고거래 사기": "1/1",
+    "지인·가족 사칭": "3/3",
+    "청첩장·부고 링크": "2/2",
+    "택배 사칭": "2/3",
+    "통신사 사칭": "1/1",
+    "투자 리딩방": "0/1"
+  },
+  "misses": [
+    {
+      "id": "S15",
+      "type": "결제 승인 사칭",
+      "text": "[국외발신] 해외결제 승인 980,000원 정상 처리. 본인 아닐 경우 고객센터 070-1234-5678 문의"
+    },
+    {
+      "id": "S16",
+      "type": "결제 승인 사칭",
+      "text": "고객님 카드로 쿠팡 1,290,000원 결제 예정입니다. 본인 결제가 아니면 지금 바로 취소 신청하세요 02-555-0101"
+    },
+    {
+      "id": "S18",
+      "type": "투자 리딩방",
+      "text": "VIP 리딩방 무료 체험 이벤트! 지난주 수익률 312% 인증. 참여는 오픈채팅으로 연락 주세요."
+    },
+    {
+      "id": "S22",
+      "type": "띄어쓰기·기호 회피",
+      "text": "엄마 나 급해 인.증.번.호 좀 알려줘 지금 문자로 갔을 거야"
+    },
+    {
+      "id": "S23",
+      "type": "띄어쓰기·기호 회피",
+      "text": "고객님 계 좌 이 체 확인이 필요합니다. 아래 주 소에서 확인하세요 hxxp://check-acc"
+    },
+    {
+      "id": "S25",
+      "type": "택배 사칭",
+      "text": "택배 기사입니다 집에 안 계셔서 문 앞에 못 두고 갔어요 재배송 원하시면 회신 주세요"
+    }
+  ],
+  "false_alarms": [
+    {
+      "id": "N04",
+      "type": "은행 인증번호 알림",
+      "level": "주의",
+      "signals": [
+        "인증번호·OTP 요구"
+      ]
+    },
+    {
+      "id": "N05",
+      "type": "입출금 알림",
+      "level": "주의",
+      "signals": [
+        "송금·이체 유도"
+      ]
+    },
+    {
+      "id": "N08",
+      "type": "쇼핑 광고",
+      "level": "주의",
+      "signals": [
+        "링크 클릭 유도"
+      ]
+    },
+    {
+      "id": "N12",
+      "type": "모임 회비",
+      "level": "주의",
+      "signals": [
+        "송금·이체 유도"
+      ]
+    },
+    {
+      "id": "N13",
+      "type": "더치페이",
+      "level": "주의",
+      "signals": [
+        "송금·이체 유도"
+      ]
+    },
+    {
+      "id": "N22",
+      "type": "보안 경고(정상)",
+      "level": "주의",
+      "signals": [
+        "인증번호·OTP 요구"
+      ]
+    },
+    {
+      "id": "N25",
+      "type": "링크 공유",
+      "level": "주의",
+      "signals": [
+        "링크 클릭 유도"
+      ]
+    }
+  ],
+  "details": [
+    {
+      "id": "S01",
+      "label": "scam",
+      "level": "위험",
+      "score": 60,
+      "signals": [
+        "링크 클릭 유도",
+        "금융사·택배 사칭",
+        "해외·웹 발신"
+      ]
+    },
+    {
+      "id": "S02",
+      "label": "scam",
+      "level": "주의",
+      "score": 35,
+      "signals": [
+        "링크 클릭 유도"
+      ]
+    },
+    {
+      "id": "S03",
+      "label": "scam",
+      "level": "위험",
+      "score": 75,
+      "signals": [
+        "링크 클릭 유도",
+        "금융사·택배 사칭",
+        "급박함·공포 조성",
+        "해외·웹 발신"
+      ]
+    },
+    {
+      "id": "S04",
+      "label": "scam",
+      "level": "위험",
+      "score": 60,
+      "signals": [
+        "앱 설치 유도",
+        "금융사·택배 사칭"
+      ]
+    },
+    {
+      "id": "S05",
+      "label": "scam",
+      "level": "주의",
+      "score": 40,
+      "signals": [
+        "송금·이체 유도"
+      ]
+    },
+    {
+      "id": "S06",
+      "label": "scam",
+      "level": "주의",
+      "score": 40,
+      "signals": [
+        "지인·가족 사칭",
+        "급박함·공포 조성"
+      ]
+    },
+    {
+      "id": "S07",
+      "label": "scam",
+      "level": "주의",
+      "score": 50,
+      "signals": [
+        "지인·가족 사칭",
+        "개인정보 요구"
+      ]
+    },
+    {
+      "id": "S08",
+      "label": "scam",
+      "level": "주의",
+      "score": 25,
+      "signals": [
+        "지인·가족 사칭"
+      ]
+    },
+    {
+      "id": "S09",
+      "label": "scam",
+      "level": "주의",
+      "score": 40,
+      "signals": [
+        "기관 사칭",
+        "급박함·공포 조성"
+      ]
+    },
+    {
+      "id": "S10",
+      "label": "scam",
+      "level": "위험",
+      "score": 80,
+      "signals": [
+        "송금·이체 유도",
+        "기관 사칭",
+        "급박함·공포 조성"
+      ]
+    },
+    {
+      "id": "S11",
+      "label": "scam",
+      "level": "위험",
+      "score": 60,
+      "signals": [
+        "링크 클릭 유도",
+        "기관 사칭"
+      ]
+    },
+    {
+      "id": "S12",
+      "label": "scam",
+      "level": "주의",
+      "score": 45,
+      "signals": [
+        "링크 클릭 유도",
+        "해외·웹 발신"
+      ]
+    },
+    {
+      "id": "S13",
+      "label": "scam",
+      "level": "주의",
+      "score": 35,
+      "signals": [
+        "링크 클릭 유도"
+      ]
+    },
+    {
+      "id": "S14",
+      "label": "scam",
+      "level": "주의",
+      "score": 35,
+      "signals": [
+        "링크 클릭 유도"
+      ]
+    },
+    {
+      "id": "S15",
+      "label": "scam",
+      "level": "안전",
+      "score": 10,
+      "signals": [
+        "해외·웹 발신"
+      ]
+    },
+    {
+      "id": "S16",
+      "label": "scam",
+      "level": "안전",
+      "score": 0,
+      "signals": []
+    },
+    {
+      "id": "S17",
+      "label": "scam",
+      "level": "주의",
+      "score": 45,
+      "signals": [
+        "앱 설치 유도"
+      ]
+    },
+    {
+      "id": "S18",
+      "label": "scam",
+      "level": "안전",
+      "score": 0,
+      "signals": []
+    },
+    {
+      "id": "S19",
+      "label": "scam",
+      "level": "주의",
+      "score": 50,
+      "signals": [
+        "링크 클릭 유도",
+        "금융사·택배 사칭"
+      ]
+    },
+    {
+      "id": "S20",
+      "label": "scam",
+      "level": "위험",
+      "score": 70,
+      "signals": [
+        "인증번호·OTP 요구",
+        "기관 사칭"
+      ]
+    },
+    {
+      "id": "S21",
+      "label": "scam",
+      "level": "주의",
+      "score": 40,
+      "signals": [
+        "송금·이체 유도"
+      ]
+    },
+    {
+      "id": "S22",
+      "label": "scam",
+      "level": "안전",
+      "score": 0,
+      "signals": []
+    },
+    {
+      "id": "S23",
+      "label": "scam",
+      "level": "안전",
+      "score": 0,
+      "signals": []
+    },
+    {
+      "id": "S24",
+      "label": "scam",
+      "level": "주의",
+      "score": 50,
+      "signals": [
+        "링크 클릭 유도",
+        "급박함·공포 조성"
+      ]
+    },
+    {
+      "id": "S25",
+      "label": "scam",
+      "level": "안전",
+      "score": 15,
+      "signals": [
+        "금융사·택배 사칭"
+      ]
+    },
+    {
+      "id": "N01",
+      "label": "normal",
+      "level": "안전",
+      "score": 0,
+      "signals": []
+    },
+    {
+      "id": "N02",
+      "label": "normal",
+      "level": "안전",
+      "score": 0,
+      "signals": []
+    },
+    {
+      "id": "N03",
+      "label": "normal",
+      "level": "안전",
+      "score": 0,
+      "signals": []
+    },
+    {
+      "id": "N04",
+      "label": "normal",
+      "level": "주의",
+      "score": 45,
+      "signals": [
+        "인증번호·OTP 요구"
+      ]
+    },
+    {
+      "id": "N05",
+      "label": "normal",
+      "level": "주의",
+      "score": 40,
+      "signals": [
+        "송금·이체 유도"
+      ]
+    },
+    {
+      "id": "N06",
+      "label": "normal",
+      "level": "안전",
+      "score": 0,
+      "signals": []
+    },
+    {
+      "id": "N07",
+      "label": "normal",
+      "level": "안전",
+      "score": 15,
+      "signals": [
+        "금융사·택배 사칭"
+      ]
+    },
+    {
+      "id": "N08",
+      "label": "normal",
+      "level": "주의",
+      "score": 35,
+      "signals": [
+        "링크 클릭 유도"
+      ]
+    },
+    {
+      "id": "N09",
+      "label": "normal",
+      "level": "안전",
+      "score": 0,
+      "signals": []
+    },
+    {
+      "id": "N10",
+      "label": "normal",
+      "level": "안전",
+      "score": 0,
+      "signals": []
+    },
+    {
+      "id": "N11",
+      "label": "normal",
+      "level": "안전",
+      "score": 0,
+      "signals": []
+    },
+    {
+      "id": "N12",
+      "label": "normal",
+      "level": "주의",
+      "score": 40,
+      "signals": [
+        "송금·이체 유도"
+      ]
+    },
+    {
+      "id": "N13",
+      "label": "normal",
+      "level": "주의",
+      "score": 40,
+      "signals": [
+        "송금·이체 유도"
+      ]
+    },
+    {
+      "id": "N14",
+      "label": "normal",
+      "level": "안전",
+      "score": 0,
+      "signals": []
+    },
+    {
+      "id": "N15",
+      "label": "normal",
+      "level": "안전",
+      "score": 15,
+      "signals": [
+        "금융사·택배 사칭"
+      ]
+    },
+    {
+      "id": "N16",
+      "label": "normal",
+      "level": "안전",
+      "score": 0,
+      "signals": []
+    },
+    {
+      "id": "N17",
+      "label": "normal",
+      "level": "안전",
+      "score": 0,
+      "signals": []
+    },
+    {
+      "id": "N18",
+      "label": "normal",
+      "level": "안전",
+      "score": 0,
+      "signals": []
+    },
+    {
+      "id": "N19",
+      "label": "normal",
+      "level": "안전",
+      "score": 0,
+      "signals": []
+    },
+    {
+      "id": "N20",
+      "label": "normal",
+      "level": "안전",
+      "score": 0,
+      "signals": []
+    },
+    {
+      "id": "N21",
+      "label": "normal",
+      "level": "안전",
+      "score": 0,
+      "signals": []
+    },
+    {
+      "id": "N22",
+      "label": "normal",
+      "level": "주의",
+      "score": 45,
+      "signals": [
+        "인증번호·OTP 요구"
+      ]
+    },
+    {
+      "id": "N23",
+      "label": "normal",
+      "level": "안전",
+      "score": 0,
+      "signals": []
+    },
+    {
+      "id": "N24",
+      "label": "normal",
+      "level": "안전",
+      "score": 15,
+      "signals": [
+        "금융사·택배 사칭"
+      ]
+    },
+    {
+      "id": "N25",
+      "label": "normal",
+      "level": "주의",
+      "score": 35,
+      "signals": [
+        "링크 클릭 유도"
+      ]
+    }
+  ]
+}
